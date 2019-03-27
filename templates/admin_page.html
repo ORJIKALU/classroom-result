@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}
+{{schoolInfo[0]["school_name"].upper()}}
+{% endblock %}
+
+{% block main %}
+  <div id=portfolio>
+ <table class = "table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"> <span class="blue">SCHOOLS</span></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+      {%for school in schoolInfo%}
+      {% if school["username"] != "admin" %}
+    <tr>
+<td><form action="/edit_school" id="portfolio-form" method="post">
+  <button  name = "veiw_school" value = "{{school["id"]}}" type="submit">{{school["school_name"]}}</button>
+</form> form-teacher: {{school["firstname"]}}</td>
+<form action="/delete_school" method="post"><td><button name="id" class="btn btn-primary" value ="{{school["id"]}}">DELETE</button></td></form>
+    </tr>
+    {%endif%}
+    {% endfor %}
+  </tbody>
+  </table>
+  </div>
+{% endblock %}

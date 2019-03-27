@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Upload Classlist
+{% endblock %}
+
+{% block main %}
+<div id="enter_classlist">
+<form action="/confirm_classlist"  id="class_created"  method="post">
+ <table class="table table-striped">
+<thead>
+    <tr>
+        <th>no</th>
+        <th>firstname</th>
+        <th>surname</th>
+        <th>othername</th>
+        <th>sex</th>
+    </tr>
+</thead>
+<tbody>
+{% for i in range(n)  %}
+
+        {% set id = i|string %}
+        {% set surname = "s"+ id %}
+        {% set firstname = "f"+ id%}
+        {% set othername = "o"+ id%}
+        {% set sex = "g"+ id%}
+        <tr>
+           <td> {{loop.index}}.</td>
+            <td><input  class="col classlist"  name="{{firstname}}" placeholder=" firstname" type="text" required/></td>
+           <td> <input  class ="col classlist" name="{{surname}}" placeholder="surname" type="text" required/></td>
+            <td><input class="col" name="{{othername}}" placeholder="othername" type="text"/></td>
+            <td><label ><input  class = "col" type="radio" name="{{sex}}" value="Female" required> <h4>Female</h4> </label>
+            <label ><input class = "col" type="radio" name="{{sex}}" value="Male" required> <h4>Mal</h4></label></td>
+            
+        </tr>
+           <input name="n" value="{{n}}" type="text" hidden/>
+
+{% endfor %}
+</tbody>
+</table>
+<div class="form-w3ls">
+ <button id="submit_classlist" class="sign-in" type="submit">Submit</button>
+ </div>
+ </form>
+ </div>
+<!-- js files -->
+	<script src="/static/js/portfolio.js"></script>
+<!-- /js files -->
+{% endblock %}

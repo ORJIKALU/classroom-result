@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}
+{{schoolInfo[0]["school_name"].upper()}}
+{% endblock %}
+ {{subjectData[0]["name"]}} &nbsp;&nbsp;scoresheet
+{% block main %}
+<div id="scoresheet">
+<h1>{{subjectData[0]["name"]}} &nbsp;&nbsp; scoresheet &nbsp;&nbsp; for &nbsp;&nbsp; {{classData[0]["name"]}}</h1>
+   <table class = "table table-striped">
+     <thead>
+       <th>no</th>
+        <th>name</th>
+        <th>ca</th>
+        <th>test</th>
+        <th>exam</th>
+        <th>total</th>
+        <th>subject position</th>
+
+
+
+     </thead>
+     <tbody>
+     {% for student in class_list%}
+     <tr>
+     <td>{{loop.index}}</td>
+     <td>{{student["surname"].upper()}}&nbsp;&nbsp; {{student["firstname"].upper()}}&nbsp;&nbsp; {{student["othername"].upper()}}</td>
+     <td>{{caData[loop.index-1][subjectData[0]["name"]]}}</td>
+     <td>{{testData[loop.index-1][subjectData[0]["name"]]}}</td>
+     <td>{{examData[loop.index-1][subjectData[0]["name"]]}}</td>
+     <td>{{mastersheet[loop.index-1][subjectData[0]["name"]]}}</td>
+     <td>{{subject_position[loop.index-1][subjectData[0]["name"]]}}</td>
+     </tr>
+     {% endfor %}
+     <tr>
+      {% set subject_id = subjectData[0]["id"]|string %}
+      {% set scoresheet_id = subject_id +"_"+classData[0]["id"]|string %}
+
+         <td colspan="4"> <form action="/verify_scoresheet" method="post"><button class="btn btn-primary" name="edit_scoresheet" value="{{scoresheet_id}}">EDIT SCORESHEET</button></form></td>
+        <td colspan="3"><form action="/delete_scoresheet" method="post"><button name="delete_scoresheet" value="{{scoresheet_id}}" class="btn btn-primary" disabled>DELETE SCORESHEET</button></form></td>
+     </tr>
+     </tbody>
+     </table>
+</div>
+{% endblock %}

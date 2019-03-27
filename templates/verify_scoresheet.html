@@ -1,0 +1,19 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+verify scoresheet
+{% endblock %}
+
+{% block main %}
+      {% set subject_id = sub_id|string %}
+      {% set scoresheet_id = subject_id +"_"+classData[0]["id"]|string %}
+
+    <div class="form-w3ls">
+
+<form action="/edit_scoresheet" method="post">            
+<input name="password" placeholder="form master password" type="password"/>
+<button class="btn btn-primary" name="edit_scoresheet" value="{{scoresheet_id}}">VERIFY</button>
+</form>
+    </div>
+    {% endblock %}

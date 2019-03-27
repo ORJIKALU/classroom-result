@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{classData[0]["name"]}}
+{% endblock %}
+
+{% block main %}
+
+ <table id="classview" class = "table table-striped">
+  <thead>
+    <tr>
+      <th>NO</th>
+      <th colspan="3"><h1><b>{{classData[0]["name"].upper()}} Students</b></h1></th>
+      {% set class_id = classData[0]["id"]|string %}
+
+
+  </tr>
+  </thead>
+      
+  <tbody>
+
+      {%for data in mastersheet%}
+      {% set student_id = data["id"]|string %}
+      {% set button_id = student_id+"_"+class_id %}
+
+
+    <tr>
+      <td>{{data["id"]}}</td>
+      <td>{{class_list[loop.index-1]["surname"]}} {{class_list[loop.index-1]["firstname"]}} {{class_list[loop.index-1]["othername"]}}</td>
+      <td><form method="post" action="/result_sheet"><button name="result_sheet" class="btn btn-primary" value = "{{button_id}}">VEIW RESULT</button>
+</form></td>
+     <td > <form action="/verify_teacher" method="post"><button class="btn btn-primary" name="edit_student" value="{{button_id}}">EDIT DETAILS</button></form></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+    <form action ="/verify_add_student" method = "post">
+        <button  type="submit" class="sign-in" name = "add_student" value = "{{classData[0]["id"]}}">add student</button>
+  </form>
+
+
+   <table id="classview" class = "table table-striped">
+     <thead>
+       <th>no</th>
+        <th>subject</th>
+        <th>average</th>
+        <th></th>
+     </thead>
+     <tbody>
+
+     {% for subject in subjectData%}
+     {% set subject_id = subject["id"]|string %}
+     {% set scoresheet_id = subject_id+"_"+class_id %}
+     <tr>
+     <td>{{loop.index}}</td>
+     
+     <td>{{subject["name"].upper()}}</td>
+     <td>{{ "%.2f"|format(subject["class_average"]|float) }}</td>
+     <td><form action="/scoresheet" method="post"><button class="btn btn-primary" name="scoresheet" value="{{scoresheet_id}}">VEIW </button></form></td>
+     </tr>    
+     {% endfor %}
+     </tbody>
+     </table>
+       <form action ="/make_result" method = "post">
+        <button  type="submit" class="sign-in" name = "result" value = "{{classData[0]["id"]}}">make result</button>
+  </form>
+
+
+{% endblock %}

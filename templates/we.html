@@ -1,0 +1,34 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Submit scores
+{% endblock %}
+
+{% block main %}
+    <form action="/submit_score" method="post">
+        <div class="form-group">
+            <input class="form-control" name="subject_name" placeholder="FULL NAME OF SUBJECT" type="text"/>
+        </div>
+<div id="usernamereg-birthDate" class="pure-u-1-2 reg-month puree-dropdown dropdown">
+            <select name="the_class" id="usernamereg-month" aria-required="true">
+            <option  selected="" disabled="">select&nbsp;Class</option>
+            {% for class in classes %}
+                    <option  value="{{class["id"]}}">{{class["name"]}}</option>
+            {% endfor %}
+            </select>
+            <div class="arrow"></div>
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="subject_teacher" placeholder="subject_teacher" type="text"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="confirmation" placeholder="Password" type="password"/>
+        </div>
+        
+        <button class="btn btn-primary" type="submit">SUBMIT</button>
+    </form>
+{% endblock %}

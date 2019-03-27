@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    edit scoresheet
+{% endblock %}
+
+{% block main %}
+      {% set subject_id = subjectData[0]["id"]|string %}
+      {% set scoresheet_id = subject_id +"_"+classData[0]["id"]|string %}
+
+<form action="/edited_scoresheet" method="post">
+ <table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">NAME</th>
+      <th scope="col">CA </th>
+       <th scope="col">TEST </th>
+         <th scope="col">EXAM </th>
+    </tr>
+  </thead>
+  <tbody>
+{% for student in class_list %}
+  <div class="form-row">
+        {% set id = student["id"]|string %}
+        <div class="col">   <tr><td>{{student["surname"]}} {{student["firstname"]}}</td></div>
+        <div class="col">
+         {% set cascore = "cascore"+ id %}
+         <td><input type="number" max="{{schoolInfo[0]["ca_max"]}}" min="0"  class="form-control"  name ="{{cascore}}" value="{{caData[loop.index-1][subjectData[0]["name"]]}}"></td>
+        </div>
+        <div class="col">
+         {% set testscore = "testscore"+ id %}
+         <td><input type="number" max="{{schoolInfo[0]["test_max"]}}" min="0" class="form-control" value="{{testData[loop.index-1][subjectData[0]["name"]]}}" name ="{{testscore}}"></td>
+        </div>
+        <div class="col">
+         {% set examscore = "examscore"+ id %}
+         <td><input type="number" max="{{schoolInfo[0]["exam_max"]}}" min="0" class="form-control" value="{{examData[loop.index-1][subjectData[0]["name"]]}}" name ="{{examscore}}"></td>
+        </div>
+  </div>
+{% endfor %}
+</table>
+ <a><button class="sign-in" name="edited_scoresheet" value="{{scoresheet_id}}" type="submit">Submit</button></a>
+ </form>
+{% endblock %}

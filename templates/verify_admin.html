@@ -1,0 +1,17 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+verify admin
+{% endblock %}
+
+{% block main %}
+
+    <div class="form-w3ls">
+
+<form action="/verified_admin" method="post">            
+<input type="password" name="password" placeholder="admin password" />
+<button class="btn btn-primary" name="class_id" value="{{classData[0]["id"]}}">VERIFY </button>
+</form>
+    </div>
+    {% endblock %}

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    upload scoresheet
+{% endblock %}
+
+{% block main %}
+<form action="/confirm_scoresheet" method="post">
+ <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">NAME</th>
+      <th scope="col">CA </th>
+       <th scope="col">TEST </th>
+         <th scope="col">EXAM </th>
+    </tr>
+  </thead>
+  <tbody>
+{% for student in class_names %}
+  <div class="form-row">
+        {% set id = student["id"]|string %}
+        <div class="col">   <tr><td>{{student["surname"]}} {{student["firstname"]}}</td></div>
+        <div class="col">
+         {% set cascore = "cascore"+ id %}
+         <td><input type="number" max="{{setting[0]["ca"]}}" min="0"  class="form-control" placeholder="cascore" name ="{{cascore}}" ></td>
+        </div>
+        <div class="col">
+         {% set testscore = "testscore"+ id %}
+         <td><input type="number" max="{{setting[0]["test"]}}" min="0" class="form-control" placeholder="testscore" name ="{{testscore}}" ></td>
+        </div>
+        <div class="col">
+         {% set examscore = "examscore"+ id %}
+         <td><input type="number" max="{{setting[0]["exam"]}}" min="0" class="form-control" placeholder="examscore" name ="{{examscore}}"></td>
+        </div>
+  </div>
+{% endfor %}
+</table>
+  <div class="form-w3ls">
+
+ <button class="sign-in" name="button" value="{{classinfo["id"]}}" type="submit">Submit</button></div>
+ </form>
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
+        <!--online_fonts-->
+        	<link href="//fonts.googleapis.com/css?family=Sansita:400,400i,700,700i,800,800i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+        	<link href="//fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+        <!--//online_fonts-->
+        <!-- documentation at http://getbootstrap.com/docs/4.0/, alternative themes at https://bootswatch.com/4-alpha/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet"/>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+          <link rel="stylesheet" href="/resources/demos/style.css">
+          <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <link href="/static/css/styles.css" rel="stylesheet" media="all"/>
+        <script src="/static/js/script.js"/></script>
+
+        <link href="//fonts.googleapis.com/css?family=Old+Standard+TT:400,400i,700" rel="stylesheet">
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'><!--web font-->
+        <!-- //web font -->
+        <script>addEventListener("load", function() { 
+  setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <script>addEventListener("load", function() 
+{ setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+</script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+        <!-- Custom Theme files -->
+        <title>RESULT: {% block title %}{% endblock %}</title>
+
+    </head>
+
+    <body>
+
+        <nav  id='nav' class="navbar navbar-expand-md navbar-light bg-light border navbar-fixed-top">
+            <a class="navbar-brand" href="/login"><span class="blue">C</span><span class="blue">L</span><span class="green">A</span><span class="red">SS</span> <span class="blue">Results.ng</span></a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <span class="green">
+            {% if session.user_id %}
+            {{schoolInfo[0]["school_name"].upper()}}
+            {% endif %}
+            </span>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if session.user_id %}
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/createClass">Register a class</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/submit_score">Submit score</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/logout">setting</a></li>
+                    </ul>
+                {% else %}
+                     <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary border text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+        <main id="main">
+            {%if error%}
+            <div id="error"><span class= "red">{{error}}</span></div>
+            {%endif%}
+            {% block main %}{% endblock %}
+        </main>
+        
+        <footer id="footer">
+            <hr> <p class="white"><a href="/how_to_use">How to use</a></p>
+            <hr><p class="white"><a href="/about_us">About us<a/></p>
+            <hr><p class="white"> contact us: Email: classresult@gmail.com or classresult@yahoo.com
+            <hr><ul class="white">Phone number: Kelvin +2348165015861 or Orji +2349072448176</ul></p>
+           <hr> <p class="copyright">&copy; 2018 stylish sign in and sign up Form. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+        </footer>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    </body>
+
+</html>

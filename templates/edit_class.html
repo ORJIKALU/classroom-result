@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+edit student details
+{% endblock %}
+
+{% block main %}
+<form action="/edited_class" method="post">
+  <div class="form-row">
+    <div >
+<label>form master surname</label>
+     <input type="text"  name =  "surname" placeholder={{classData[0]["surname"]}}>
+    </div>
+    <div >
+        <label>form master firstname</label>
+
+     <input type="text"  name="firstname" placeholder={{classData[0]["firstname"]}}>
+    </div>
+     <div >
+                 <label>form master othername</label>
+
+      <input type="text"  name="othername" placeholder={{classData[0]["othername"]}}>
+  </div>
+    </div>
+            <label>class name</label>
+
+      <input type="text"  placeholder="{{classData[0]["name"]}}" name="class_name">
+
+    </div>
+
+ <button name="id" class="btn btn-primary" type="submit" value={{classData[0]["id"]}}>Submit</button>
+ </form>
+ <form action="/delete_class" method="post"><button name="delete_class" class="btn btn-primary" type="submit" value={{classData[0]["id"]}}>DELETE CLASS</button></form>
+
+{% endblock %}

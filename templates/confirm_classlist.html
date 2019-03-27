@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    upload classlist
+{% endblock %}
+
+{% block main %}
+
+
+<form action="/classCreated" method="post">
+ <table class="table table-striped">
+  <thead>
+    <tr>
+    <th scope="col">NO</th>
+      <th scope="col">fIRSTNAME</th>
+    <th scope="col">SURNAME</th>
+      <th scope="col">OTHERNAME(SEX)</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for student in students %}
+
+        {% set id = loop.index - 1%}
+        {% set id = id|string %}
+        {% set surname = "s"+ id %}
+        {% set firstname = "f"+ id%}
+        {% set othername = "o"+ id%}
+        {% set sex = "g"+ id%}
+
+         <tr><td>{{loop.index}}.</td>
+            
+            <td><input  class="col classlist"  value="{{student[0]}}" type="text" required="required" disabled/></td>
+            <td><input  class="col classlist"  value="{{student[1]}}" type="text" required="required" disabled/></td>
+            <td><input  class="col classlist"   value="{{student[2]}} ({{student[3][0]}})" type="text" required="required" disabled/></td>
+        </tr>
+            <input  class="col classlist"  name="{{firstname}}" value="{{student[0]}}" type="hidden" required="required" />
+            <input  class="col classlist"  name="{{surname}}" value="{{student[1]}}" type="hidden" required="required" />
+            <input  class="col classlist"  name="{{othername}}" value="{{student[2]}}" type="hidden" required="required" />
+            <input  class="col classlist"  name="{{sex}}" value="{{student[3][0]}}" type="hidden" required="required"/>
+
+{% endfor %}
+</table>
+
+<div class="form-w3ls">
+ <button class="sign-in" name="submit" type="submit" value="submit">Confirm</button>
+ </div>
+ 
+ </form>
+ 
+ <div class="form-w3ls">
+     <form action="/createClass" method="get">
+ <button class="sign-in" name="submit" type="submit" value="submit">Cancel</button>
+ </form>
+ </div>
+
+{% endblock %}

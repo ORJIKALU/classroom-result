@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  add student
+{% endblock %}
+
+{% block main %}
+<form action="/student_added" method="post">
+  <div class="form-row">
+    <div class="col">
+        
+
+     <input type="text"  placeholder="surname" name =  "surname">
+    </div>
+    <div class="col">
+     <input type="text"  placeholder="firstname" name="firstname">
+    </div>
+     <div class="col">
+      <input type="text"  placeholder="othernames" name="othername">
+    </div>
+
+    <div class ="col">
+      <label class="radio-inline"><input class = "col" type="radio" name="sex" value="female"> <h4> Female </h4> </label>
+      <label class="radio-inline"><input class = "col" type="radio" name="sex" value="male"> <h4> Male </h4> </label>
+    </div>
+  </div>
+ <button class="btn btn-primary" type="submit" name="class_id" value="{{classData[0]["id"]}}">Submit</button>
+ </form>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+verify add student
+{% endblock %}
+
+{% block main %}
+      {% set id = classData[0]["id"]|string %}
+
+    <div class="form-w3ls">
+
+<form action="/verified_add_student" method="post">            
+<input type="password" name="password" placeholder="form master password" />
+<button class="btn btn-primary" name="verify_add_student" value="{{id}}">VERIFY </button>
+</form>
+    </div>
+    {% endblock %}

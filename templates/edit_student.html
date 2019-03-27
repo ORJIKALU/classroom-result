@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+edit student details
+{% endblock %}
+
+{% block main %}
+<form action="/edited_student" method="post">
+  <div class="form-row">
+    <div class="col">
+        {% set student_id = id|string %}
+        {% set surname = "s"+ student_id %}
+        {% set firstname = "f"+ student_id%}
+        {% set othername = "o"+ student_id%}
+        {% set sex = "g"+ student_id%}
+
+     <input type="text"  placeholder="surname" name =  "{{surname}}" value={{student["surname"]}}>
+    </div>
+    <div class="col">
+     <input type="text"  placeholder="firstname" name="{{firstname}}" value={{student["firstname"]}}>
+    </div>
+     <div class="col">
+      <input type="text"  placeholder="othernames" name="{{othername}}" value={{student["othername"]}}>
+    </div>
+
+    <div class ="col">
+        {%if student["sex"] == "male" %}
+      <label class="radio-inline"><input class = "col" type="radio" name="{{sex}}" value="female"> <h4> Female </h4> </label>
+      <label class="radio-inline"><input class = "col" type="radio" name="{{sex}}" value="male" checked> <h4> Male </h4> </label>
+      {%else%}
+     <label class="radio-inline"><input class = "col" type="radio" name="{{sex}}" value="female" checked> <h4> Female </h4> </label>
+      <label class="radio-inline"><input class = "col" type="radio" name="{{sex}}" value="male" > <h4> Male </h4> </label>
+        {%endif%}
+    </div>
+  </div>
+      {% set combined_id = student_id +"_"+classData[0]["id"]|string %}
+
+ <button name="edit_student" class="btn btn-primary" type="submit" value={{combined_id}}>Submit</button>
+ </form>
+ <form action="/unregister_student" method="post"><button name="unregister_student" class="btn btn-primary" type="submit" value={{combined_id}}>DELETE STUDENT</button></form>
+
+{% endblock %}

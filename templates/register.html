@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+<div name="register-form">
+                        
+    <div class="form-w3ls">
+
+    <form id="register" action="/register" method="post">
+            <div class="register-form">
+            <hr>
+                 <h1 class="message green"> REGISTER FOR FREE!</h1>
+            <hr>
+                <h1 class="message"> personal information</h1>
+          <span class="row">
+           <input class="col"  name="firstname" placeholder=" firstname" type="text" required="required"/>
+            <input  class ="col" name="surname" placeholder="surname" type="text" required="required"/>
+           <input class="col" name="othernames" placeholder="othername" type="text" required="required"/>
+           </span>
+           <input  name="email" placeholder="email" type="email" required="required"/>
+           <input  name="phone_number" placeholder="phone number" type="number" required="required"/>
+
+            <hr>
+             <h1 class="message">School information</h1>
+           <input  name="school_name" placeholder="school name" type="text" required="required"/ >
+
+            <span class="row">
+                <input class= "col"  name="address" placeholder="Address" type="text" required="required"/>
+            </span>
+            <span class="row">
+              <input class= "col"  name="city" placeholder="city" type="text" required="required"/>
+                <span  class="col">
+                    <select name="state"  aria-required="true">
+                    <option  selected="" disabled="">state</option>
+                        <option value="Abia">Abia</option>
+                        <option value="Abuja">Abuja</option>
+                        <option value="Adamawa">Adamawa</option>
+                        <option value="Akwa Ibom">Akwa Ibom</option>
+                        <option value="Anambra">Anambra</option>
+                        <option value="Bauchi">Bauchi</option>
+                        <option value="Bayelsa">Bayelsa</option>
+                        <option value="Benue">Benue</option>
+                        <option value="Borno">Borno</option>
+                        <option value="Cross River">Cross River</option>
+                        <option value="Delta">Delta</option>
+                        <option value="Ebonyi">Ebonyi</option>
+                        <option value="Enugu">Enugu</option>
+                        <option value="Edo">Edo</option>
+                        <option value="Ekiti">Ekiti</option>
+                        <option value="Gombe">Gombe</option>
+                        <option value="Imo">Imo</option>
+                        <option value="Jigawa">Jigawa</option>
+                        <option value="Kaduna">Kaduna</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Katsina">Katsina</option>
+                        <option value="Kebbi">Kebbi</option>
+                        <option value="Kogi">Kogi</option>
+                        <option value="Kwara">Kwara</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Nasarawa">Nasarawa</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Ogun">Ogun</option>
+                        <option value="Ondo">Ondo</option>
+                        <option value="Osun">Osun</option>
+                        <option value="Oyo">Oyo</option>
+                        <option value="Plateau">Plateau</option>
+                        <option value="Rivers">Rivers</option>
+                        <option value="Sokoto">Sokoto</option>
+                        <option value="Taraba">Taraba</option>
+                        <option value="Yobe">Yobe</option>
+                        <option value="Zamfara">Zamfara</option>
+
+                    </select>
+                    <div class="arrow"></div>
+                </span>
+           </span> 
+                      <span class="row">
+               
+                <div  class="col">
+                    <select name="term"  aria-required="true">
+                    <option  selected="" disabled="">term</option>
+                            <option  value="1">first</option>
+                            <option  value="2">second</option>
+                            <option  value="3">third</option>
+                    </select>
+                    <div class="arrow"></div>
+                </div>
+                <div  class="col">
+                    <select name="school_session"  aria-required="true">
+                    <option  selected="" disabled="">session</option>
+                            <option  value="2018/2019">2018/2019</option>
+                            <option  value="2019/2020">2019/2020</option>
+                            <option  value="2020/2021">2020/2021</option>
+                    </select>
+                    <div class="arrow"></div>
+                </div>
+                       </span> 
+
+            <hr>
+            <h1 class="message">Staff login details</h1>
+            <input class="form-control" name="username" placeholder="Username" type="text"/>
+            <input placeholder="password" type="password" id="psw" name="password" pattern=".{8,}" title="Must contain at least 8 or more characters" required="required">
+            <div id="message2">
+              <h3>Password must contain the following:</h3>
+              <p id="length2" class="invalid">Minimum <b>8 characters</b></p>
+            </div>
+
+            
+            
+            <input  name="confirmation" placeholder=" confirm Password" type="password" required="required"/>
+            <hr>
+            <h1 class="message">Admin Details</h1>
+            
+            <input placeholder="admin password" type="password" id="admin" name="admin_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+            <div id="message">
+              <h3>AdminPassword must contain the following:</h3>
+              <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+              <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+              <p id="number" class="invalid">A <b>number</b></p>
+              <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+            </div>
+
+            <input  name="admin_password_confirmation" placeholder="confirm admin Password" type="password" required="required"/>
+			<button type="submit" class="sign-in" id="submit_registration" value="Register">Register</button>
+			</div>
+    </form>
+    </div>
+    </div>
+<!-- js files -->
+	<script src='/static/js/jquery.min.js'></script>
+	<script src="/static/js/register.js"></script>
+<!-- /js files -->
+
+   
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}
+{{schoolInfo[0]["school_name"].upper()}}
+{% endblock %}
+result sheet
+{% block main %}
+<div id="resultsheet">
+<h1>{{class_list[0]["surname"]}} {{class_list[0]["firstname"]}} {{class_list[0]["othername"]}}  class: {{classData[0]["name"]}}</h1>
+   <table class = "table table-striped">
+     <thead>
+       <th>no</th>
+        <th>subject</th>
+        <th>ca</th>
+        <th>test</th>
+        <th>exam</th>
+        <th>total</th>
+        <th>subject position</th>
+
+
+
+     </thead>
+     <tbody>
+     {% for subject in subjectData%}
+     <tr>
+     <td>{{loop.index}}</td>
+     <td>{{subject["name"].upper()}}</td>
+     <td>{{caData[0][subject["name"]]}}</td>
+     <td>{{testData[0][subject["name"]]}}</td>
+     <td>{{examData[0][subject["name"]]}}</td>
+     <td>{{mastersheet[0][subject["name"]]}}</td>
+     <td>{{subject_position[0][subject["name"]]}}</td>
+     </tr>
+     {% endfor %}
+     <tr>
+         <td colspan="7">TOTAL:&nbsp; {{mastersheet[0]["total_score"]}} &nbsp;&nbsp;&nbsp;&nbsp; AVERAGE:&nbsp;{{ "%.2f"|format(mastersheet[0]["average"]|float) }} </td>
+     </tr>
+     <tr>
+         <td colspan="7"><h1>position:&nbsp;&nbsp;{{mastersheet[0]["position"]}} &nbsp;&nbsp;out of&nbsp;&nbsp; {{classData[0]["no_of_students"]}}</h1>
+</td>
+     </tr>
+     </tbody>
+     </table>
+     </div>
+{% endblock %}
