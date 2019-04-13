@@ -6,7 +6,7 @@
 
 {% block main %}
 <form action="/confirm_scoresheet" method="post">
- <table class="table table-striped">
+ <table class="table table-sm">
   <thead>
     <tr>
       <th scope="col">NAME</th>
@@ -22,15 +22,37 @@
         <div class="col">   <tr><td>{{student["surname"]}} {{student["firstname"]}}</td></div>
         <div class="col">
          {% set cascore = "cascore"+ id %}
-         <td><input type="number" max="{{setting[0]["ca"]}}" min="0"  class="form-control" placeholder="cascore" name ="{{cascore}}" ></td>
-        </div>
+                    <td><select name="{{cascore}}" id="ca"  aria-required="true">
+                    <option  value="" selected="" disabled="">ca score</option>
+                    <option  value="0" >0</option>
+                      {%for i in range(setting[0]["ca"])%}
+                            <option  value="{{i+1}}">{{i+1}}</option>
+                       {%endfor%}
+                    </select>
+                    <div class="arrow"></div></td>
+         </div>
+
         <div class="col">
          {% set testscore = "testscore"+ id %}
-         <td><input type="number" max="{{setting[0]["test"]}}" min="0" class="form-control" placeholder="testscore" name ="{{testscore}}" ></td>
+                    <td><select name="{{testscore}}" id="test"  aria-required="true">
+                    <option  value="" selected="" disabled="">test score</option>
+                    <option  value="0" >0</option>
+                      {%for i in range(setting[0]["test"])%}
+                            <option  value="{{i+1}}">{{i+1}}</option>
+                       {%endfor%}
+                    </select>
+                    <div class="arrow"></div></td>
         </div>
         <div class="col">
          {% set examscore = "examscore"+ id %}
-         <td><input type="number" max="{{setting[0]["exam"]}}" min="0" class="form-control" placeholder="examscore" name ="{{examscore}}"></td>
+                    <td><select name="{{examscore}}" id="exam"  aria-required="true">
+                    <option  value="" selected="" disabled="">exam score</option>
+                    <option  value="0" >0</option>
+                      {%for i in range(setting[0]["exam"])%}
+                            <option  value="{{i+1}}">{{i+1}}</option>
+                       {%endfor%}
+                    </select>
+                    <div class="arrow"></div></td>
         </div>
   </div>
 {% endfor %}

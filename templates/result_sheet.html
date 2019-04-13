@@ -5,7 +5,7 @@
 result sheet
 {% block main %}
 <div id="resultsheet">
-<h1>{{class_list[0]["surname"]}} {{class_list[0]["firstname"]}} {{class_list[0]["othername"]}}  class: {{classData[0]["name"]}}</h1>
+<h1>{{class_list[0]["surname"]}} {{class_list[0]["firstname"]}} {{class_list[0]["othername"]}}  class: {{classData[0]["classname"]}}</h1>
    <table class = "table table-striped">
      <thead>
        <th>no</th>
@@ -14,6 +14,7 @@ result sheet
         <th>test</th>
         <th>exam</th>
         <th>total</th>
+        <th>grade</th>
         <th>subject position</th>
 
 
@@ -21,21 +22,28 @@ result sheet
      </thead>
      <tbody>
      {% for subject in subjectData%}
+     {% set subject_id = subject["id"]|string %}
+
+
      <tr>
      <td>{{loop.index}}</td>
+
      <td>{{subject["name"].upper()}}</td>
-     <td>{{caData[0][subject["name"]]}}</td>
-     <td>{{testData[0][subject["name"]]}}</td>
-     <td>{{examData[0][subject["name"]]}}</td>
-     <td>{{mastersheet[0][subject["name"]]}}</td>
-     <td>{{subject_position[0][subject["name"]]}}</td>
+     <td>{{caData[0][subject_id]}}</td>
+     <td>{{testData[0][subject_id]}}</td>
+     <td>{{examData[0][subject_id]}}</td>
+     <td>{{mastersheet[0][subject_id]}}</td>
+     <td>{{gradeRows[0][subject_id]}}</td>
+     <td>{{subject_position[0][subject_id]}}</td>
+
+
      </tr>
      {% endfor %}
      <tr>
-         <td colspan="7">TOTAL:&nbsp; {{mastersheet[0]["total_score"]}} &nbsp;&nbsp;&nbsp;&nbsp; AVERAGE:&nbsp;{{ "%.2f"|format(mastersheet[0]["average"]|float) }} </td>
+         <td colspan="8">TOTAL:&nbsp; {{mastersheet[0]["total_score"]}} &nbsp;&nbsp;&nbsp;&nbsp; AVERAGE:&nbsp;{{ "%.2f"|format(mastersheet[0]["average"]|float) }} </td>
      </tr>
      <tr>
-         <td colspan="7"><h1>position:&nbsp;&nbsp;{{mastersheet[0]["position"]}} &nbsp;&nbsp;out of&nbsp;&nbsp; {{classData[0]["no_of_students"]}}</h1>
+         <td colspan="8"><h1>position:&nbsp;&nbsp;{{mastersheet[0]["position"]}} &nbsp;&nbsp;out of&nbsp;&nbsp; {{resultData["noOfStudents"]}}<P></P>&nbsp;&nbsp;NO OF SUBJECTS PASSED:&nbsp;&nbsp;&nbsp;{{mastersheet[0]["passed"]}}</P><p>&nbsp;&nbsp;&nbsp;&nbsp;NO OF A'S&nbsp;&nbsp;{{gradeRows[0]["no_of_A"]}}&nbsp;&nbsp;NUMBER OF B'S: {{gradeRows[0]["no_of_B"]}}&nbsp;&nbsp;NUMBER OF C'S: {{gradeRows[0]["no_of_C"]}}&nbsp;&nbsp;NUMBER OF D'S: {{gradeRows[0]["no_of_D"]}}&nbsp;&nbsp;NUMBER OF E'S: {{gradeRows[0]["no_of_E"]}}&nbsp;&nbsp;NUMBER OF F'S: {{gradeRows[0]["no_of_F"]}}</p></h1>
 </td>
      </tr>
      </tbody>

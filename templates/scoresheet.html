@@ -5,7 +5,7 @@
  {{subjectData[0]["name"]}} &nbsp;&nbsp;scoresheet
 {% block main %}
 <div id="scoresheet">
-<h1>{{subjectData[0]["name"]}} &nbsp;&nbsp; scoresheet &nbsp;&nbsp; for &nbsp;&nbsp; {{classData[0]["name"]}}</h1>
+<h1>{{subjectData[0]["name"]}} &nbsp;&nbsp; scoresheet &nbsp;&nbsp; for &nbsp;&nbsp; {{classData[0]["classname"]}}</h1>
    <table class = "table table-striped">
      <thead>
        <th>no</th>
@@ -15,20 +15,19 @@
         <th>exam</th>
         <th>total</th>
         <th>subject position</th>
-
-
-
      </thead>
+
      <tbody>
      {% for student in class_list%}
+          {% set subject_id = subjectData[0]["id"]|string %}
      <tr>
      <td>{{loop.index}}</td>
      <td>{{student["surname"].upper()}}&nbsp;&nbsp; {{student["firstname"].upper()}}&nbsp;&nbsp; {{student["othername"].upper()}}</td>
-     <td>{{caData[loop.index-1][subjectData[0]["name"]]}}</td>
-     <td>{{testData[loop.index-1][subjectData[0]["name"]]}}</td>
-     <td>{{examData[loop.index-1][subjectData[0]["name"]]}}</td>
-     <td>{{mastersheet[loop.index-1][subjectData[0]["name"]]}}</td>
-     <td>{{subject_position[loop.index-1][subjectData[0]["name"]]}}</td>
+     <td>{{caData[loop.index-1][subject_id]}}</td>
+     <td>{{testData[loop.index-1][subject_id]}}</td>
+     <td>{{examData[loop.index-1][subject_id]}}</td>
+     <td>{{mastersheet[loop.index-1][subject_id]}}</td>
+     <td>{{subject_position[loop.index-1][subject_id]}}</td>
      </tr>
      {% endfor %}
      <tr>

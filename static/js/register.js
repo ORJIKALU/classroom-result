@@ -1,5 +1,5 @@
 $('.form').find('input, textarea').on('keyup blur focus', function (e) {
-  
+
   var $this = $(this),
       label = $this.prev('label');
 
@@ -11,15 +11,15 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         }
     } else if (e.type === 'blur') {
     	if( $this.val() === '' ) {
-    		label.removeClass('active highlight'); 
+    		label.removeClass('active highlight');
 			} else {
-		    label.removeClass('highlight');   
-			}   
+		    label.removeClass('highlight');
+			}
     } else if (e.type === 'focus') {
-      
+
       if( $this.val() === '' ) {
-    		label.removeClass('highlight'); 
-			} 
+    		label.removeClass('highlight');
+			}
       else if( $this.val() !== '' ) {
 		    label.addClass('highlight');
 			}
@@ -28,25 +28,25 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 });
 
 $('.tab a,.links a').on('click', function (e) {
-  
+
   e.preventDefault();
-  
+
   $(this).parent().addClass('active');
   $(this).parent().siblings().removeClass('active');
-  
+
   target = $(this).attr('href');
 
   $('.tab-content > div').not(target).hide();
-  
+
   $(target).fadeIn(600);
-  
+
 });
 
-addEventListener("load", function() { 
-  setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-  
-addEventListener("load", function() 
-{ setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+addEventListener("load", function() {
+  setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+addEventListener("load", function()
+{ setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
 
 var myInput = document.getElementById("admin");
 var letter = document.getElementById("letter");
@@ -77,16 +77,16 @@ myInput.onblur = function() {
 // When the user starts to type something inside the password field
 myInput.onkeyup = function() {
   // Validate lowercase letters
-  if(myInput.value.match(lowerCaseLetters)) {  
+  if(myInput.value.match(lowerCaseLetters)) {
     letter.classList.remove("invalid");
     letter.classList.add("valid");
   } else {
     letter.classList.remove("valid");
     letter.classList.add("invalid");
   }
-  
+
   // Validate capital letters
-  if(myInput.value.match(upperCaseLetters)) {  
+  if(myInput.value.match(upperCaseLetters)) {
     capital.classList.remove("invalid");
     capital.classList.add("valid");
   } else {
@@ -95,14 +95,14 @@ myInput.onkeyup = function() {
   }
 
   // Validate numbers
-  if(myInput.value.match(numbers)) {  
+  if(myInput.value.match(numbers)) {
     number.classList.remove("invalid");
     number.classList.add("valid");
   } else {
     number.classList.remove("valid");
     number.classList.add("invalid");
   }
-  
+
   // Validate length
   if(myInput.value.length >= 8) {
     length.classList.remove("invalid");
@@ -112,7 +112,7 @@ myInput.onkeyup = function() {
     length.classList.add("invalid");
   }
 };
-  
+
 
 
 // When the user clicks on the password field, show the message box
@@ -138,7 +138,7 @@ myInput2.onkeyup = function() {
     length2.classList.add("invalid");
   }
 };
-  
+
 
 
 
@@ -152,24 +152,24 @@ $(function() {
     $('#submit_registration').bind('click', function() {
   // Stop form from submitting normally
   event.preventDefault();
-  
+
 
 
   if($('input[name="username"]').val() == ""){
     alert("you must provide a username");
   }
 
-  
+
   else if($('input[name="school_name"]').val() ==""){
     alert("you must provide a school name");
   }
   else if($('input[name="email"]').val() ==""){
     alert("you must provide a email");
   }
-    else if($('input[name="school_session"]').val() ==""){
+  else if($('#school_session').find(":selected").val() ==""){
     alert("you must provide current school session");
   }
-    else if($('input[name="term"]').val() ==""){
+    else if($('#term').find(":selected").val() ==""){
     alert("you must provide a current school term");
   }
   else if($('input[name="firstname"]').val() ==""){
@@ -178,7 +178,7 @@ $(function() {
     else if($('input[name="surname"]').val() ==""){
     alert("you must provide your surname");
   }
-    
+
   else if(validateEmail($('input[name="email"]').val()) !=true){
     alert("email not valid");
   }
@@ -200,9 +200,9 @@ $(function() {
    else if($('input[name="admin_confirmation"]').val() ==""){
     alert("you must provide a password");
   }
-   else if($('input[name="state"]').val() ==""){
+   else if($('#state').find(":selected").val() ==""){
     alert("you must provide state");
-  } 
+  }
   else if($('input[name="city"]').val() ==""){
     alert("you must provide city");
   }
@@ -215,23 +215,23 @@ $(function() {
     else if($('input[name="admin_password"]').val() == $('input[name="password"]').val()){
     alert("your admin password must be different from staff password");
   }
-  
+
     // Validate lowercase letters
- else if (!(myInput.value.match(lowerCaseLetters))) {  
+ else if (!(myInput.value.match(lowerCaseLetters))) {
     alert("admin password must contain lower case(small) letters");
   }
-  
+
   // Validate capital letters
-  else if(!(myInput.value.match(upperCaseLetters))) {  
+  else if(!(myInput.value.match(upperCaseLetters))) {
       alert("admin password must contain upper (capital) letters");
-    
+
   }
 
   // Validate numbers
   else if(!(myInput.value.match(numbers))) {
     alert("admin password must contain numbers");
   }
-  
+
   // Validate length
  else if(myInput.value.length < 8) {
     alert("admin password must be up to 8 digits");
@@ -242,8 +242,7 @@ $(function() {
   }
 
 
- else{     
-    
+ else{
       $.post( $SCRIPT_ROOT + '/username_check',{
         username: $('input[name="username"]').val()
       }, function(data) {
@@ -258,13 +257,13 @@ $(function() {
 };
       });};
       });
-  
-      
 
-     
+
+
+
  }
     });
   });
-  
+
 
 

@@ -54,7 +54,7 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
-    
+
 
 #def check_confirmed(func):
   #  @wraps(func)
@@ -73,21 +73,38 @@ def initials (name):
     return name[0].upper()
 # returns the grade of any given score
 def grade(score):
-	if score < 40:
-		grade = "F"
-	elif score > 39 and score < 46:
-		grade = "E"
-	elif score > 45 and score < 50:
-		grade = "D"
-	elif score > 49 and score < 60:
-		grade = "C"
-	elif score > 59 and score < 70:
-		grade = "B"
+	grading_type="WAEC"
+	score = int(score)
+	if grading_type == "WAEC":
+		if score < 40:
+			score_grade = "F"
+		elif score > 39 and score < 46:
+			score_grade = "E"
+		elif score > 44 and score < 51:
+			score_grade = "D"
+		elif score > 49 and score < 61:
+			score_grade = "C"
+		elif score > 59 and score < 75:
+			score_grade = "B"
+		else:
+			score_grade = "A"
 	else:
-		grade = "A" 
-	return grade
+		if score < 29:
+			score_grade = "F"
+		elif score > 29 and score < 40:
+			score_grade = "E"
+		elif score > 39 and score < 50:
+			score_grade = "D"
+		elif score > 49 and score < 60:
+			score_grade = "C"
+		elif score > 59 and score < 70:
+			score_grade = "B"
+		else:
+			score_grade = "A"
 
-# forms the result data given the id of the class    
+	return score_grade
+
+# forms the result data given the id of the class
 def database(id):
     tables = {}
     # format class tables names
@@ -109,7 +126,7 @@ def database(id):
     tables["mastersheet"] = "mastersheet"+"_"+classIdentifier
     tables["subject_position"] = "subject_position"+"_"+classIdentifier
     tables["grade"] = "grade"+"_"+classIdentifier
-    tables["result"] = "result"+"_"+classIdentifier
+    tables["result"] = "result"+"_"+str(current_term)+"_"+str(current_session)+"_"+str(tables["school_id"])
     return tables
 # makes the result of a single student given class and student id
 def make_student_result(student_id, class_id):
@@ -162,7 +179,7 @@ def make_student_result(student_id, class_id):
 	db.execute("UPDATE :mastersheet SET total_score = :total_score WHERE id = :id  ", mastersheet = tables["mastersheet"], total_score = total_score, id = student_id)
 	student_average = total_score / classroom[0]["no_of_subjects"]
 	db.execute("UPDATE :mastersheet SET average = :student_average WHERE id = :id  ", mastersheet = tables["mastersheet"], student_average = student_average, id = student_id)
-	if student_average > 39:				
+	if student_average > 39:
 		db.execute("UPDATE :result_data SET no_students_passed = no_students_passed + 1 WHERE id = :id ", result_data = tables["result"],  id = class_id)
 	else:
 		db.execute("UPDATE :result_data SET no_students_failed = no_students_failed + 1 WHERE id = :id ", classes = tables["result"],  id = class_id)
@@ -235,17 +252,17 @@ def render_portfolio(school_id, error):
 
 def assign_student_position(class_id):
 	tables = database(class_id)
-	student_position  = db.execute("SELECT id, average FROM :mastersheet", mastersheet = tables["mastersheet"])
-	student_position = sorted(student_position, key = attrgetter("average"), reverse=True)
+	student_position  = db.execute("SELECT * FROM :mastersheet", mastersheet = tables["mastersheet"])
+	student_position = sorted(student_position, key = itemgetter('average'), reverse=True)
 	j = 0
 	i = 0
 	previous = 101
 	for person in student_position:
 		if previous == person["average"]:
-			db.execute("UPDATE :mastersheet SET position = :position  WHERE id =:id", mastersheet = tables["mastersheet"],  position = j, id = person["id"])
+			db.execute("UPDATE :mastersheet SET position = :sposition  WHERE id =:id", mastersheet = tables["mastersheet"],  sposition = j, id = person["id"])
 		else:
 			j = i + 1
-			db.execute("UPDATE :mastersheet SET position = :position  WHERE id =:id", mastersheet = tables["mastersheet"],  position = j, id = person["id"])
+			db.execute("UPDATE :mastersheet SET position = :sposition  WHERE id =:id", mastersheet = tables["mastersheet"],  sposition = j, id = person["id"])
 		i = i + 1
 		previous = person["average"]
 
@@ -253,19 +270,20 @@ def assign_student_position(class_id):
 def assign_subject_position(class_id, subject_id):
 	tables = database(class_id)
 	subject = str(subject_id)
-	subject_position  = db.execute("SELECT id, :subject FROM :mastersheet", subject = subject, mastersheet = tables["mastersheet"])
-	subject_position = sorted(subject_position, key = attrgetter(subject), reverse=True)
+	subject_position  = db.execute("SELECT * FROM :mastersheet",  mastersheet = tables["mastersheet"])
+	subject_position = sorted(subject_position, key = itemgetter(subject), reverse=True)
+
 	j = 0
 	i = 0
 	previous = 101
 	for person in subject_position:
-		if previous == person["subject"]:
-			db.execute("UPDATE :positIon_table SET :subject = :position    WHERE id =:id", positIon_table = tables["subject_positon"],subject = subject,  position = j, id = person["id"])
+		if previous == person[subject]:
+			db.execute("UPDATE :positIon_table SET :subject = :position    WHERE id =:id", positIon_table = tables["subject_position"],subject = subject,  position = j, id = person["id"])
 		else:
 			j = i + 1
-			db.execute("UPDATE :positIon_table SET :subject = :position    WHERE id =:id", positIon_table = tables["subject_positon"],subject = subject,  position = j, id = person["id"])
+			db.execute("UPDATE :positIon_table SET :subject = :position    WHERE id =:id", positIon_table = tables["subject_position"],subject = subject,  position = j, id = person["id"])
 		i = i + 1
-		previous = person["subject"]
+		previous = person[subject]
 
 def update_scores(class_id, subject_id, operation):
 	tables = database(subject_id)
@@ -280,65 +298,60 @@ def update_scores(class_id, subject_id, operation):
 
 		average = total / classrow[0]["no_of_subjects"]
 		db.execute("UPDATE :mastersheet SET total = :total, average = :average WHERE id=:id", mastersheet = tables["mastersheet"], total = total, average = average, id = student["id"])
-		
+
 
 
 
 def random_string_generator(str_size, allowed_chars):
     return ''.join(random.choice(allowed_chars) for x in range(str_size))
-    
+
 def term_tables(classid):
 	tables = database(classid)
 	db.execute("CREATE TABLE :classlist ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL, 'surname' TEXT,'firstname' TEXT,'othername' TEXT,'sex' TEXT, 'pin' TEXT)",classlist = tables["classlist"] )
-	
-	db.execute("CREATE TABLE :classsubjects ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'name' TEXT,'ca_max' INTEGER, 'total_score' INTEGER,'ppass' INTEGER,'class_average' INTEGER,'ca_sheet' TEXT,'test_sheet' TEXT,'exam_sheet' TEXT,'password' TEXT,'result' TEXT)",classsubjects = tables["subjects"] )
-	
+
+	db.execute("CREATE TABLE :classsubjects ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'name' TEXT, 'total_score' INTEGER DEFAULT 0,'ppass' INTEGER DEFAULT 0,'class_average' INTEGER DEFAULT 0,'no_of_A' INTEGER DEFAULT 0, no_of_B INTEGER DEFAULT 0, no_of_C INTEGER DEFAULT 0,no_of_D INTEGER DEFAULT 0,no_of_E INTEGER DEFAULT 0,no_of_F INTEGER DEFAULT 0)",classsubjects = tables["subjects"] )
+
 	# create  catable
 	db.execute("CREATE TABLE :catable ('id' INTEGER PRIMARY KEY   NOT NULL)",catable = tables["ca"] )
-	
+
 	# create  grade
-	db.execute("CREATE TABLE :grade ('id' INTEGER PRIMARY KEY   NOT NULL)",grade = tables["grade"] )
-	
+	db.execute("CREATE TABLE :grade ('id' INTEGER PRIMARY KEY   NOT NULL, 'no_of_A' INTEGER DEFAULT 0,'no_of_B' INTEGER DEFAULT 0,'no_of_C' INTEGER DEFAULT 0,'no_of_D' INTEGER DEFAULT 0,'no_of_E' INTEGER DEFAULT 0,'no_of_F' INTEGER DEFAULT 0)",grade = tables["grade"] )
+
 	# create testtable
 	db.execute("CREATE TABLE :testtable ('id' INTEGER PRIMARY KEY   NOT NULL)",testtable = tables["test"] )
-	
+
 	# create examtable
 	db.execute("CREATE TABLE :examtable ('id' INTEGER PRIMARY KEY  NOT NULL)",examtable = tables["exam"] )
-	
+
 	# create mastersheet
-	db.execute("CREATE TABLE :mastersheet ('id' INTEGER PRIMARY KEY  NOT NULL, 'total_score' INTEGER, 'average' INTEGER, 'passed' INTEGER, 'position' INTEGER )",mastersheet = tables["mastersheet"] )
-	
+	db.execute("CREATE TABLE :mastersheet ('id' INTEGER PRIMARY KEY  NOT NULL, 'total_score' INTEGER DEFAULT 0, 'average' INTEGER DEFAULT 0, 'passed' INTEGER DEFAULT 0, 'position' INTEGER )",mastersheet = tables["mastersheet"] )
+
 	# create subject_position
 	db.execute("CREATE TABLE :subjectposition ('id' INTEGER PRIMARY KEY  NOT NULL)",subjectposition = tables['subject_position'] )
-	
-	# create result data
-	db.execute("CREATE TABLE :result ('id' INTEGER PRIMARY KEY  NOT NULL, 'form_remark' TEXT, 'principal_remark' TEXT,'noOfStudents' INTEGER,'noOfSubjects' INTEGER)",result = tables["result"])
 
 
 def drop_tables(classid):
 	tables = database(classid)
-	
+
 	db.execute("DROP TABLE :classsubjects ",classsubjects = tables["subjects"] )
-	
+
 	# create  catable
 	db.execute("DROP TABLE :catable",catable = tables["ca"] )
-	
+
 	# create  grade
 	db.execute("DROP TABLE :grade",grade = tables["grade"] )
-	
+
 	# create testtable
 	db.execute("DROP TABLE :testtable",testtable = tables["test"] )
-	
+
 	# create examtable
 	db.execute("DROP TABLE :examtable ",examtable = tables["exam"] )
-	
+
 	# create mastersheet
 	db.execute("DROP TABLE :mastersheet",mastersheet = tables["mastersheet"] )
-	
+
 	# create subject_position
 	db.execute("DROP TABLE :subjectposition",subjectposition = tables['subject_position'] )
-	
-	# create result data
-	db.execute("DROP TABLE :result",result = tables["result"])
-	
+
 	db.execute("DROP TABLE :classlist ",classlist = tables["classlist"] )
+

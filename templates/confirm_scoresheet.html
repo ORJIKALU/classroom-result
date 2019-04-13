@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}
-    upload classlist
+    confirm classlist
 {% endblock %}
 {% block main %}
 <form action="/submitted" method="post">
@@ -19,10 +19,10 @@
         {% set cascore = "cascore"+ id %}
         {% set testscore = "testscore"+ id%}
         {% set examscore = "examscore"+ id%}
-            <td><input  class="col classlist"  value="{{student[0]}} {{student[1]}}" type="text" required="required" disabled/></td>
-            <td><input  class="col classlist"  value="{{student[2]}}" type="text" required="required" disabled/></td>
-            <td><input  class="col classlist"   value="{{student[3]}}" type="text" required="required" disabled/></td>
-            <td><input  class="col classlist"   value="{{student[4]}}" type="text" required="required" disabled/></td>
+            <td><input  class="col classlist"  value="{{student[1]}} {{student[2]}}" type="text" required="required" disabled/></td>
+            <td><input  class="col classlist"  value="{{student[3]}}" type="text" required="required" disabled/></td>
+            <td><input  class="col classlist"  value="{{student[4]}}" type="text" required="required" disabled/></td>
+            <td><input  class="col classlist"  value="{{student[5]}}" type="text" required="required" disabled/></td>
         </tr>
             <input  class="col classlist"  name="{{cascore}}" value="{{student[2]}}" type="hidden" required="required" />
             <input  class="col classlist"  name="{{testscore}}" value="{{student[3]}}" type="hidden" required="required" />
@@ -30,12 +30,14 @@
 {% endfor %}
 </table>
 <div class="form-w3ls">
- <button class="sign-in" name="submit" type="submit" value="submit">Confirm</button>
+      <button class="sign-in" name="button" type="submit" value="{{class_id}}">Confirm</button>
+
  </div>
+
  </form>
  <div class="form-w3ls">
-     <form action="/createClass" method="get">
- <button class="sign-in" name="button" type="submit" value="{{class_id}}">Cancel</button>
+     <form action="/submit_score" method="get">
+ <button class="sign-in" name="cancel" type="submit" value="submit">Cancel</button>
  </form>
  </div>
 {% endblock %}

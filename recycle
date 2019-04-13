@@ -1,0 +1,3 @@
+  else if((parseInt($('input[name="exam_max"]').val(), 10)+parseInt($('input[name="ca_max"]').val(), 10) + parseInt($('input[name="test_max"]').val(), 10)) != 100 ){
+    alert("total score should be 100");
+  }

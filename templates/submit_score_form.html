@@ -8,12 +8,12 @@
 {% block main %}
     <div class="form-w3ls">
 
-    <form action="/submit_score" method="post">
+    <form action="/submit_score" id="submit_score" method="post">
             <input name="subject_name" placeholder="FULL NAME OF SUBJECT" type="text" required/>
 
 <div  class="pure-u-1-2 reg-month puree-dropdown dropdown">
-            <select name="the_class" id="usernamereg-month" aria-required="true" required>
-            <option  selected="" disabled="">select&nbsp;Class</option>
+            <select name="the_class" id="your_class"  aria-required="true" required>
+            <option value="" selected="" disabled="">select&nbsp;Class</option>
             {% for class in classes %}
                     <option  value="{{class["id"]}}">{{class["classname"]}}</option>
             {% endfor %}
@@ -21,7 +21,12 @@
             <div class="arrow"></div>
         </div>
             <input autocomplete="off"   name="subject_teacher" placeholder="subject_teacher" type="text" required/>
-        <button name = "scoresheet_form" class="sign-in" type="submit">SUBMIT</button>
+        <button name = "submit_scoresheet"id="submit_scoresheet" class="sign-in" type="submit">SUBMIT</button>
     </form>
     </div>
+<!-- js files -->
+	<script src='/static/js/jquery.min.js'></script>
+	<script src="/static/js/submit.js"></script>
+<!-- /js files -->
+
 {% endblock %}

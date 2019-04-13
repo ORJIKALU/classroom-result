@@ -1,5 +1,5 @@
 $('.form').find('input, textarea').on('keyup blur focus', function (e) {
-  
+
   var $this = $(this),
       label = $this.prev('label');
 
@@ -11,15 +11,15 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         }
     } else if (e.type === 'blur') {
     	if( $this.val() === '' ) {
-    		label.removeClass('active highlight'); 
+    		label.removeClass('active highlight');
 			} else {
-		    label.removeClass('highlight');   
-			}   
+		    label.removeClass('highlight');
+			}
     } else if (e.type === 'focus') {
-      
+
       if( $this.val() === '' ) {
-    		label.removeClass('highlight'); 
-			} 
+    		label.removeClass('highlight');
+			}
       else if( $this.val() !== '' ) {
 		    label.addClass('highlight');
 			}
@@ -28,25 +28,25 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 });
 
 $('.tab a,.links a').on('click', function (e) {
-  
+
   e.preventDefault();
-  
+
   $(this).parent().addClass('active');
   $(this).parent().siblings().removeClass('active');
-  
+
   target = $(this).attr('href');
 
   $('.tab-content > div').not(target).hide();
-  
+
   $(target).fadeIn(600);
-  
+
 });
 
-addEventListener("load", function() { 
-  setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-  
-addEventListener("load", function() 
-{ setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+addEventListener("load", function() {
+  setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+addEventListener("load", function()
+{ setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
 
 $(function() {
     $('#login').bind('click', function() {
@@ -55,7 +55,7 @@ $(function() {
   if($('input[name="username"]').val() == ""){
     alert("you must provide a username");
   }
-  
+
  else if($('input[name="password"]').val() ==""){
     alert("you must provide a password");
   }
@@ -71,7 +71,7 @@ $(function() {
       });}
     });
   });
-  
+
 var myInput2 = document.getElementById("psw");
 var length2 = document.getElementById("length2");
 // When the user clicks on the password field, show the message box
@@ -102,12 +102,12 @@ myInput2.onkeyup = function() {
 
 
 
-  
+
 $(function() {
     $('#but').bind('click', function() {
   // Stop form from submitting normally
   event.preventDefault();
-  
+
  if($('input[name="password"]').val() ==""){
     alert("you must provide a password");
   }
